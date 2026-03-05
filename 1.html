@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给最特别的你</title>
+    <style>
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #7e66ea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: '微软雅黑', sans-serif;
+            padding: 20px;
+        }
+        
+        /* 贺卡卡片 */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px 30px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            backdrop-filter: blur(10px);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* 标题 */
+        h1 {
+            font-size: 2.8em;
+            color: #14f7ff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(255,20,147,0.3);
+        }
+        
+        /* 装饰表情 */
+        .emoji {
+            font-size: 4em;
+            margin: 10px 0;
+            animation: bounce 1s infinite;
+        }
+        
+        @keyframes bounce {
+            0%,100%{ transform: rotate(0deg); }
+            25%{ transform: rotate(10deg); }
+            75%{ transform: rotate(-10deg); }
+        }
+        
+        /* 照片区域 */
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 5px solid #ff6969;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* 祝福文字 */
+        .message {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 20px;
+            margin: 25px 0;
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            border-left: 5px solid #ff69b4;
+        }
+        
+        /* 按钮 */
+        .btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border: none;
+            padding: 15px 50px;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255,107,107,0.4);
+            transition: all 0.3s;
+            margin: 10px;
+        }
+        
+        .btn:active {
+            transform: scale(0.95);
+        }
+        
+        .btn:hover {
+            box-shadow: 0 8px 20px rgba(255,107,107,0.6);
+        }
+        
+        /* 祝福显示框 */
+        .wish-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fff3cd;
+            border-radius: 15px;
+            font-size: 1.3em;
+            color: #856404;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-left: 5px solid #ffc107;
+        }
+        
+        /* 纪念日倒计时 */
+        .days-count {
+            font-size: 2em;
+            color: #ffd414;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        /* 底部落款 */
+        .footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 1em;
+            border-top: 1px dashed #ddd;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <!-- 装饰表情 -->
+        <div class="emoji">🎉</div>
+        
+        <!-- 标题（把“小明”改成朋友名字） -->
+        <h1>生日快乐！</h1>
+        
+        <!-- 照片（把friend.jpg改成实际照片名） -->
+        <div class="photo-frame">
+            <img src="微信图片_20260304223147_8_16.jpg" alt="朋友照片" onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=friend'">
+        </div>
+        
+        <!-- 祝福语区域（自定义修改这里） -->
+        <div class="message">
+            <p>✨ 祝你中考顺利 金榜题名 ✨</p>
+            <p>✨ 第五人格天天连胜 抽抽出金 ✨</p>
+            <p>✨ 身体健康 事事顺心 ✨</p>
+            <p>✨ 生日快乐 ✨</p>
+        </div>
+        
+        <!-- 认识多少天（自动计算） -->
+        <div>我们已经一起走过了</div>
+        <div class="days-count" id="daysCount">计算中...</div>
+        
+        <!-- 按钮组 -->
+        <div>
+            
+            <button class="btn" onclick="createConfetti()">🎊 撒花(不要按太快 会卡)</button>
+        </div>
+        
+        <div class="memory-card" style="background: white; border-radius: 20px; padding: 20px; margin: 20px 0;">
+    <style>
+    .polaroid-card {
+        background: white;
+        padding: 15px 15px 30px 15px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        transform: rotate(2deg);
+        transition: transform 0.3s;
+        margin: 20px 0;
+    }
+    
+    .polaroid-card:nth-child(even) {
+        transform: rotate(-1deg);
+    }
+    
+    .polaroid-card:hover {
+        transform: rotate(0deg) scale(1.02);
+    }
+    
+    .polaroid-photo {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-bottom: 2px solid #eee;
+    }
+    
+    .polaroid-caption {
+        padding: 10px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9em;
+        color: #333;
+        text-align: center;
+    }
+    
+    .polaroid-date {
+        font-size: 0.8em;
+        color: #999;
+        margin-top: 5px;
+    }
+</style>
+
+<div class="polaroid-card" id="polaroid">
+    <img id="polaroidPhoto" class="polaroid-photo" src="" alt="回忆照片">
+    <div class="polaroid-caption">
+        <div id="polaroidText"></div>
+        <div class="polaroid-date" id="polaroidDate"></div>
+    </div>
+</div>
+
+<button class="btn" onclick="showNextPolaroid()">回忆流动🔮</button>
+        
+        <!-- 落款 -->
+        <div class="footer">
+            💝 永远爱你的朋友 💝
+        </div>
+    </div>
+    <script>
+        // ================== JavaScript功能 ==================
+        
+        // 1. 计算认识多少天（把日期改成你们认识的日期）
+        function calculateDays() {
+            const startDate = new Date('2023-07-29'); // 修改这里！
+            const today = new Date();
+            
+            // 计算相差天数
+            const diffTime = today - startDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('daysCount').textContent = diffDays + ' 天';
+        }
+        
+        // 2.回忆
+      
+
+const polaroids = [
+    {
+        text: "第一次遇见你是在第五人格的自定义房间里，还记得当时睡不着，去第五人格玩娱乐房，连续玩了两个房都有你，觉得有缘就加了你的好友。",
+        date: "2023.7.29",
+        photo: "微信图片_20260305231419_35_24.jpg"
+    },
+    {
+        text: "这天晚上，我们加了QQ，从此我们就一直有联系。",
+        date: "2023.08.26",
+        photo: "https://ts1.tc.mm.bing.net/th/id/OIP-C.YlL-kCqhHye5DbZE5oMruwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+        text: "这是我与你认识后我过得第2个生日，我很喜欢你给我画的画，我会一直珍藏！",
+        date: "2024.10.12",
+        photo: "微信图片_20260305232815_36_24.jpg"
+    },
+    {
+        text: "我们勇敢地开始了第一次通话，你的声音真的很好听，希望以后我们也能有更多通话的机会。",
+        date: "2025.4.5",
+        photo: "https://ts4.tc.mm.bing.net/th/id/OIP-C.c7TvvS1tfU1cwrJTpgFWLwHaHa?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+        text: "我第一次去你的家乡，这也是我至今去过的最远的城市，你的家乡很美（就是海鲜我有点吃不惯）",
+        date: "2025.7.28",
+        photo: "微信图片_20260305234706_37_24.jpg"
+    },
+    {
+        text: "生日快乐！这是我第一次用代码给你做生日礼物，做得可能不太好。希望我们能一起创造更多回忆！",
+        date: "2026.3.6",
+        photo: "https://ts1.tc.mm.bing.net/th/id/R-C.758152bc5c0bd0b38f220d71e71876b3?rik=%2bAlUGaIIETXNMQ&riu=http%3a%2f%2fcontent.pic.tianqistatic.com%2fcontent%2fjierizixun%2fzhufuyu%2fimages%2f202212%2f21%2f29f34090877f3d8b.jpg&ehk=Kv8BU%2bn3d34diNuWA%2bwcVG2LR6JGvQVSKYVw5Z3pL%2fU%3d&risl=&pid=ImgRaw&r=0"
+    },
+];
+
+let currentPolaroid = 0;
+
+function showNextPolaroid() {
+    const p = polaroids[currentPolaroid];
+    
+    document.getElementById('polaroidText').innerHTML = p.text;
+    document.getElementById('polaroidDate').innerHTML = p.date;
+    document.getElementById('polaroidPhoto').src = p.photo;
+    
+    currentPolaroid++;
+    if (currentPolaroid >= polaroids.length) {
+        currentPolaroid = 0;
+    }
+}
+        // 4. 撒花特效
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                createSingleConfetti();
+            }
+        }
+        
+        function createSingleConfetti() {
+            const confetti = document.createElement('div');
+            
+            // 随机样式
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#ff9ff6', '#54a0ff'];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-20px';
+            confetti.style.width = Math.random() * 10 + 5 + 'px';
+            confetti.style.height = Math.random() * 10 + 5 + 'px';
+            confetti.style.backgroundColor = color;
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+            confetti.style.zIndex = '9999';
+            confetti.style.pointerEvents = 'none';
+            
+            document.body.appendChild(confetti);
+            
+            // 动画
+            let y = 0;
+            let x = Math.random() * 2 - 1; // 左右飘动
+            let rotation = 0;
+            
+            const timer = setInterval(() => {
+                y += 3;
+                x += (Math.random() - 0.5) * 0.5;
+                rotation += 5;
+                
+                confetti.style.top = y + 'px';
+                confetti.style.left = (parseFloat(confetti.style.left) + x) + 'vw';
+                confetti.style.transform = `rotate(${rotation}deg)`;
+                
+                if (y > window.innerHeight + 100) {
+                    clearInterval(timer);
+                    confetti.remove();
+                }
+            }, 20);
+        }
+        
+        // 5. 页面加载时自动计算天数
+        window.onload = function() {
+            calculateDays();
+        };
+    </script>
+</body>
+</html>
